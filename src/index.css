@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+  
+@layer base {
+    @font-face {
+      font-family: 'PPEiko';
+      font-style: italic;
+      font-weight: 900;
+      src: url(/fonts/PPEiko-BlackItalic.otf) ;
+    }
+    @font-face {
+        font-family: 'PPNeueBit';
+        src: url(/fonts/PPNeueBit-Bold.otf) ;
+        font-weight: 700;
+    }
+  }
+
+body {
+    font-family: 'Manrope', sans-serif;
+}
+
+.textBorder{
+    -webkit-text-stroke: 40px #001aff;
+    paint-order: stroke fill;
+}
