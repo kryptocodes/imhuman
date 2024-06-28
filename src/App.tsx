@@ -1,6 +1,5 @@
-import { useState } from 'react'
 import './App.css'
-import { Route, Router, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import AppLayout from './components/layouts/AppLayout'
 import Login from './pages/login/Login'
 import Dashboard from './pages/dashboard/Dashboard'

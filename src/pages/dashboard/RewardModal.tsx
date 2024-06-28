@@ -7,21 +7,26 @@ interface RewardModalProps {
 
 }
 
-const RewardModal: FC<RewardModalProps> = ({ }) => {
+const RewardModal: FC<RewardModalProps> = () => {
     const [openModal, setOpenModal] = useState(false)
-    const [buttonState, setButtonState] = useState("idle");
+    const [buttonState, setButtonState] = useState<string>("idle");
 
-    const buttonCopy: any = {
+    const buttonCopy:{
+        idle: string,
+        loading: JSX.Element,
+        success: string,
+        [key: string]: string | JSX.Element,
+    } = {
         idle: "Claim Your Nft",
         loading: <Loader2 className="h-6 w-6 animate-spin" />,
         success: "Nft Claimed",
     };
 
-    const ref = useRef(null);
+    const ref = useRef<HTMLDivElement>(null);
     useOnClickOutside(ref, () => setOpenModal(false));
 
     useEffect(() => {
-        function onKeyDown(event: any) {
+        function onKeyDown(event: KeyboardEvent) {
             if (event.key === "Escape") {
                 setOpenModal(false);
             }

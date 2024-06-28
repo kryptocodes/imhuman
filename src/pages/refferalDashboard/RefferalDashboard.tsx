@@ -4,7 +4,7 @@ interface RefferalDashboardProps {
 
 }
 
-const RefferalDashboard: FC<RefferalDashboardProps> = ({ }) => {
+const RefferalDashboard: FC<RefferalDashboardProps> = () => {
   return (
     <div className=' max-w-sm mx-auto px-4 bg-white text-black min-h-screen ' >
       <div className="border rounded-3xl border-black/10 py-4 px-5 shadow-md ">

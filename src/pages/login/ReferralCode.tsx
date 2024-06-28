@@ -5,7 +5,7 @@ interface ReferralCodeProps {
 
 }
 
-const ReferralCode: FC<ReferralCodeProps> = ({ }) => {
+const ReferralCode: FC<ReferralCodeProps> = () => {
     return (
         <div className=' max-w-sm mx-auto text-black bg-white h-screen' >
             <div className="flex h-full flex-col justify-center items-center w-[80%] mx-auto">

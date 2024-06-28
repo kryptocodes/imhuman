@@ -4,7 +4,7 @@ interface TaskModalProps {
   
 }
 
-const TaskModal: FC<TaskModalProps> = ({  }) => {
+const TaskModal: FC<TaskModalProps> = () => {
   return (
     <div className='w-full bg-white rounded-3xl text-black p-3 flex justify-between items-center '>
      <div className=" flex gap-2 justify-start items-center">

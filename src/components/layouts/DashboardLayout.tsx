@@ -1,5 +1,4 @@
 import React, { FC } from 'react'
-import SplashScreen from '../SplashScreen';
 
 interface DashboardLayoutProps {
     children: React.ReactNode

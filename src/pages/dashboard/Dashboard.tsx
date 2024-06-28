@@ -29,7 +29,7 @@ const Dashboard = () => {
         </p>
         <div className="flex flex-col gap-4 mt-4 ">
           {
-            Array.from({ length: 5 }).map((_, i) => (
+            Array.from({ length: 5 }).map(() => (
               <TaskModal />
             ))
           }
