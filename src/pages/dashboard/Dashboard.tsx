@@ -1,8 +1,11 @@
 import DashboardLayout from '@/components/layouts/DashboardLayout'
 import TaskModal from './TaskModal'
 import RewardModal from './RewardModal'
+import { useNavigate } from 'react-router-dom'
 
 const Dashboard = () => {
+
+  const navigate = useNavigate()
 
   return (
     <DashboardLayout>
@@ -13,10 +16,10 @@ const Dashboard = () => {
           <button className=' text-xs' > Copy Code </button>
         </div>
         <div className="flex gap-2 justify-center items-center mt-3">
-          <button className='flex-1 bg-white hover:bg-white/80 transition-all duration-200 text-brand rounded-xl py-2 font-semibold text-xs'>
+          <button onClick={()=>navigate('/referral-dashboard')}  className='flex-1 bg-white hover:bg-white/80 transition-all duration-200 text-brand rounded-xl py-2 font-semibold text-xs'>
             Referral Dashboard
           </button>
-          <button className='flex-1 bg-white hover:bg-white/80 transition-all duration-200 text-brand rounded-xl py-2 font-semibold text-xs'>
+          <button onClick={()=>navigate('/leaderboard')}  className='flex-1 bg-white hover:bg-white/80 transition-all duration-200 text-brand rounded-xl py-2 font-semibold text-xs'>
             Leaderboard
           </button>
         </div>

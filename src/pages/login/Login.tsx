@@ -1,5 +1,23 @@
+import { ConnectButton } from "@rainbow-me/rainbowkit"
+import { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import { useAccount } from "wagmi"
 
 const Login = () => {
+  const account = useAccount()
+  // redirect using react router dom if account is present
+  const navigate = useNavigate()
+
+  console.log(account.isConnected);
+  
+
+  useEffect(() => {
+    if (account.isConnected) {
+      navigate('/')
+    }
+  }
+  , [account.status])
+
   return (
     <div className=' text-center overflow-x-hidden flex flex-col h-screen items-center justify-center '>
       <div className="">
@@ -7,9 +25,10 @@ const Login = () => {
         <p className=' font-eiko text-6xl  textBorder leading-[57px] -translate-y-3  z-[1000] '>Embrace <br /> Humanity</p>
       </div>
       <div className="bg-white rounded-2xl px-[2px] mt-11 pt-[2px] pb-[6px] ">
-        <button className=" text-brand border-2 font-bold py-2 px-9 rounded-2xl border-brand" >
+        {/* <button className=" text-brand border-2 font-bold py-2 px-9 rounded-2xl border-brand" >
           Connect Wallet
-        </button>
+        </button> */}
+        <ConnectButton/>
       </div>
       <div className="relative w-full flex mt-16  justify-center items-center ">
         <img src="/human.svg" className=" w-[250px] " alt="" />
