@@ -14,7 +14,7 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
             <div className=" p-[18px] mb-52    ">
                 {children}
             </div>
-            {/* <img src="/petalsBgAlt.svg" className='absolute bottom-0' alt="" /> */}
+            <img src="/petalsBgAlt.svg" className='absolute object-contain bottom-0' alt="" />
         </div>
     )
 }

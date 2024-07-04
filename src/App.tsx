@@ -5,15 +5,15 @@ import Login from './pages/login/Login'
 import Dashboard from './pages/dashboard/Dashboard'
 import RefferalDashboard from './pages/refferalDashboard/RefferalDashboard'
 import ReferralCode from './pages/login/ReferralCode'
-import ComingSoon from './pages/ComingSoon'
+// import ComingSoon from './pages/ComingSoon'
 
 function App() {
 
   return (
     <Routes>
       <Route path='/' element={<AppLayout />}  >
-        <Route path='/' element={<ComingSoon />} />
-        {/* <Route path='/' element={<Dashboard />} /> */}
+        {/* <Route path='/' element={<ComingSoon />} /> */}
+        <Route path='/' element={<Dashboard />} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/referral-dashboard' element={<RefferalDashboard />} />
         <Route path='/referral-code' element={<ReferralCode />} />
@@ -23,4 +23,4 @@ function App() {
   )
 }
 
-export default App
+export default App 

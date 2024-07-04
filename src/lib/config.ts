@@ -1,10 +1,20 @@
-import { http, createConfig } from 'wagmi'
-import { mainnet, sepolia } from 'wagmi/chains'
+import '@rainbow-me/rainbowkit/styles.css';
+import {
+  getDefaultConfig,
+} from '@rainbow-me/rainbowkit';
+import {
+  sepolia,
+  mainnet
+} from 'wagmi/chains';
 
-export const config = createConfig({
-  chains: [mainnet, sepolia],
-  transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
-  },
-})
+const projectId = import.meta.env.VITE_WALLETCONNECT_PROJECT_ID;
+
+export const config = getDefaultConfig({
+  appName: 'I am human',
+  projectId: projectId as string,
+  chains: [
+    sepolia,
+    mainnet
+  ],
+  ssr: false, 
+});

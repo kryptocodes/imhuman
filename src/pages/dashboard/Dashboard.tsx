@@ -3,6 +3,7 @@ import TaskModal from './TaskModal'
 import RewardModal from './RewardModal'
 
 const Dashboard = () => {
+
   return (
     <DashboardLayout>
       <div className=" bg-white/15 border border-white rounded-xl p-3  ">
@@ -12,10 +13,10 @@ const Dashboard = () => {
           <button className=' text-xs' > Copy Code </button>
         </div>
         <div className="flex gap-2 justify-center items-center mt-3">
-          <button className='flex-1 bg-white text-brand rounded-xl py-2 font-semibold text-xs'>
+          <button className='flex-1 bg-white hover:bg-white/80 transition-all duration-200 text-brand rounded-xl py-2 font-semibold text-xs'>
             Referral Dashboard
           </button>
-          <button className='flex-1 bg-white text-brand rounded-xl py-2 font-semibold text-xs'>
+          <button className='flex-1 bg-white hover:bg-white/80 transition-all duration-200 text-brand rounded-xl py-2 font-semibold text-xs'>
             Leaderboard
           </button>
         </div>
@@ -34,17 +35,28 @@ const Dashboard = () => {
             ))
           }
         </div>
-        <div className=" mt-6 border-2 rounded-3xl grid grid-cols-3 ">
+        <div className=" mt-6 border-2 shadow-md rounded-3xl grid grid-cols-3 ">
           <div className=" col-span-2 p-3 flex flex-col justify-center  ">
             <p className=' text-lg font-semibold mb-4 ' >
-            Complete tasks to <br />  claim the <u>Human Detector</u> NFT
+              Complete tasks to <br />  claim the <u>Human Detector</u> NFT
             </p>
             <RewardModal />
           </div>
           <img src="/human.svg" alt="" />
         </div>
-        <div className=" mt-6 border-2 rounded-3xl p-4">
-          <div className=""></div>
+        <div className=" mt-6 border-2 shadow-md rounded-3xl grid grid-cols-3 ">
+          <img src="/human.svg" alt="" />
+          <div className=" col-span-2 p-3 flex flex-col items-start justify-center  ">
+            <p className=' text-xl  font-semibold mb-4 ' >
+              Collect 100xp to <br />  Get Airdrop
+            </p>
+            {/* claim modal */}
+            {/* <RewardModal /> */}
+            {/* Progress */}
+            <span className=" text-lg py-1 px-3 font-bold text-brand bg-white rounded-full ">
+                75 / 100 xp
+            </span>
+          </div>
         </div>
       </div>
     </DashboardLayout>
