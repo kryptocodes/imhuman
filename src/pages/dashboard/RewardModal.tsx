@@ -1,17 +1,18 @@
-import  { FC, useEffect, useRef, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from "framer-motion";
 import { useOnClickOutside } from "usehooks-ts";
 import { Loader2 } from "lucide-react"
+import axios from 'axios';
 
 interface RewardModalProps {
-
+    reward: any
 }
 
-const RewardModal: FC<RewardModalProps> = () => {
+const RewardModal: FC<RewardModalProps> = (reward) => {
     const [openModal, setOpenModal] = useState(false)
     const [buttonState, setButtonState] = useState<string>("idle");
 
-    const buttonCopy:{
+    const buttonCopy: {
         idle: string,
         loading: JSX.Element,
         success: string,
@@ -47,6 +48,38 @@ const RewardModal: FC<RewardModalProps> = () => {
             document.body.classList.remove('overflow-hidden');
         };
     }, [openModal]);
+
+    const handleClaim = async () => {
+        if (buttonState === "success") return;
+
+        setButtonState("loading");
+        const token = localStorage.getItem('token')
+        if (!token) {
+          console.log('No JWT token found in local storage.')
+          return
+        }
+        try {
+            const response = await axios.post('https://m8aanm1noe.execute-api.ap-southeast-1.amazonaws.com/api/reward/claim',{
+                rewardId: reward.reward.id
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            console.log(response.data, 'response.data')
+          } catch (error) {
+            console.error('Failed to fetch tasks:', error)
+          }
+        
+        setTimeout(() => {
+            setButtonState("success");
+        }, 1750);
+
+        setTimeout(() => {
+            setButtonState("idle");
+        }, 3500);
+        setOpenModal(false);
+    }
 
     return (
         <>
@@ -92,35 +125,23 @@ const RewardModal: FC<RewardModalProps> = () => {
                                     Lorem ipsum dolor sit amet
                                 </h2>
                                 <p className=' text-brand mt-2 text-xs ' >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
-                            <button className=' mt-4 overflow-hidden py-[14px] bg-brand text-white font-semibold w-full rounded-2xl '
-                                disabled={buttonState === "loading"}
-                                onClick={() => {
-                                    if (buttonState === "success") return;
-
-                                    setButtonState("loading");
-
-                                    setTimeout(() => {
-                                        setButtonState("success");
-                                    }, 1750);
-
-                                    setTimeout(() => {
-                                        setButtonState("idle");
-                                    }, 3500);
-                                }}
-                            >
-                                <AnimatePresence mode="popLayout" initial={false}>
-                                    <motion.span
-                                        transition={{ type: "spring", duration: 0.3, bounce: 0 }}
-                                        initial={{ opacity: 0, y: -25 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, y: 25 }}
-                                        key={buttonState}
-                                        className='flex justify-center items-center gap-2 w-full'
-                                    >
-                                        {buttonCopy[buttonState]}
-                                    </motion.span>
-                                </AnimatePresence>
-                            </button>
+                                <button className=' mt-4 overflow-hidden py-[14px] bg-brand text-white font-semibold w-full rounded-2xl '
+                                    disabled={buttonState === "loading"}
+                                    onClick={handleClaim}
+                                >
+                                    <AnimatePresence mode="popLayout" initial={false}>
+                                        <motion.span
+                                            transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+                                            initial={{ opacity: 0, y: -25 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            exit={{ opacity: 0, y: 25 }}
+                                            key={buttonState}
+                                            className='flex justify-center items-center gap-2 w-full'
+                                        >
+                                            {buttonCopy[buttonState]}
+                                        </motion.span>
+                                    </AnimatePresence>
+                                </button>
                             </motion.div>
                         </div>
                     ) : null

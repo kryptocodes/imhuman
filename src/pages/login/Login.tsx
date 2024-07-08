@@ -1,9 +1,12 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { useAccount } from "wagmi"
+import { toast } from "sonner"
+import { useAccount, useSignMessage } from "wagmi"
+import axios from 'axios'
 
 const Login = () => {
+  const { data,error,variables , signMessageAsync} = useSignMessage()
   const account = useAccount()
   // redirect using react router dom if account is present
   const navigate = useNavigate()
@@ -13,10 +16,72 @@ const Login = () => {
 
   useEffect(() => {
     if (account.isConnected) {
-      navigate('/')
+      handleConnect(account.address as string)
+      toast('Connected Successfully')
+      // navigate('/')
     }
   }
   , [account.status])
+
+
+  const generateNonce = async (walletAddress:string) => {
+    try {
+      const response = await axios.post('https://m8aanm1noe.execute-api.ap-southeast-1.amazonaws.com/api/auth/generate-nonce', {
+        walletAddress: walletAddress
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleConnect = async ( walletAddress:string ) =>{
+    const nonceData:{nonce:string,id:any} = await generateNonce(walletAddress);
+
+    const message = await signMessageAsync({message:nonceData.nonce});
+
+    const verify = await verifyData(nonceData.id,message)
+
+    
+    if(!localStorage.getItem('token')){
+      localStorage.setItem('token',verify.token)
+    } else {
+      localStorage.removeItem('token')
+      localStorage.setItem('token',verify.token)
+    }
+
+    if(verify.isFirstTime){
+      navigate('/referral-code')
+    } else {
+      navigate('/')
+    }
+
+    
+    // console.log(signature, 'signature');
+    
+  }
+
+  const verifyData = async (id:any,signature:any) => {
+    try {
+      const response = await axios.post('https://m8aanm1noe.execute-api.ap-southeast-1.amazonaws.com/api/auth/verify', {
+        id,
+        signature
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <div className=' text-center overflow-x-hidden flex flex-col h-screen items-center justify-center '>
