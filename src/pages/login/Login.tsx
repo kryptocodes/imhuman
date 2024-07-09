@@ -96,9 +96,9 @@ const Login = () => {
         <ConnectButton/>
       </div>
       <div className="relative w-full flex mt-16  justify-center items-center ">
-        <img src="/human.svg" className=" w-[250px] " alt="" />
-        <img src="/mobilePetal1.svg" className="absolute right-0 top-0" alt="" />
-        <img src="/mobilePetal2.svg" className="absolute -left-10 -bottom-10" alt="" />
+        <img loading="eager" src="/human.svg" className=" w-[250px] " alt="" />
+        <img loading="eager" src="/mobilePetal1.svg" className="absolute right-0 top-0" alt="" />
+        <img loading="eager" src="/mobilePetal2.svg" className="absolute -left-10 -bottom-10" alt="" />
       </div>
     </div>
   )
