@@ -22,6 +22,6 @@ body {
 }
 
 .textBorder{
-    -webkit-text-stroke: 40px #001aff;
+    -webkit-text-stroke: 10px #001aff;
     paint-order: stroke fill;
 }
