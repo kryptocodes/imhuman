@@ -6,36 +6,36 @@ import { toast } from 'sonner';
 import axios from 'axios';
 
 interface TaskModalProps {
-  task:any
-  isCompleted:any
+  task: any
+  isCompleted: any
 }
 
-const TaskModal: FC<TaskModalProps> = ({task,isCompleted}) => {
+const TaskModal: FC<TaskModalProps> = ({ task, isCompleted }) => {
   const [openModal, setOpenModal] = useState(false)
   const [buttonState, setButtonState] = useState<string>("idle");
 
   console.log(isCompleted, 'isCompleted');
 
-  const handleTask = async () =>{
+  const handleTask = async () => {
 
-    if(isCompleted){
+    if (isCompleted) {
       return;
     }
-    if(task?.type === 'static'){
-      window.open('https://x.com/home','_blank')
-      updateTwitterTask()     
-      toast.success('Task Completed') 
+    if (task?.type === 'static') {
+      const url = 'https://x.com/iamhumanxyz'
+      navigator.userAgent.match(/(iPod|iPhone|iPad)/) ? window.open(url, "_top") : window.open(url, "_blank")
+      updateTwitterTask()
+      toast.success('Task Completed')
       return
     }
 
 
-    const req:any = await UpdateReclaimTask()
-    window.open(req.requestUrl,'_blank')
-    
+    const req: any = await UpdateReclaimTask()
+    navigator.userAgent.match(/(iPod|iPhone|iPad)/) ? window.open(req.requestUrl, "_top") : window.open(req.requestUrl, "_blank")
 
   }
 
-  const UpdateReclaimTask = async ()=>{
+  const UpdateReclaimTask = async () => {
     const token = localStorage.getItem('token');
     if (!token) {
       console.log('No JWT token found in local storage.');
@@ -45,14 +45,14 @@ const TaskModal: FC<TaskModalProps> = ({task,isCompleted}) => {
     let data = {
       "taskId": task.id
     };
-    
+
     let config = {
       method: 'post',
       url: 'https://m8aanm1noe.execute-api.ap-southeast-1.amazonaws.com/api/task/generate',
-      headers: { 
+      headers: {
         'Authorization': `Bearer ${token}`
       },
-      data : data
+      data: data
     };
 
     try {
@@ -73,14 +73,14 @@ const TaskModal: FC<TaskModalProps> = ({task,isCompleted}) => {
     let data = {
       "taskId": task.id
     };
-    
+
     let config = {
       method: 'post',
       url: 'https://m8aanm1noe.execute-api.ap-southeast-1.amazonaws.com/api/task/update',
-      headers: { 
+      headers: {
         'Authorization': `Bearer ${token}`
       },
-      data : data
+      data: data
     };
 
     try {
@@ -141,13 +141,13 @@ const TaskModal: FC<TaskModalProps> = ({task,isCompleted}) => {
           <p className=' text-[#333342] w-[15ch]  ' >{task?.description}</p>
         </div>
         {
-        isCompleted?(
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M1.8501 12.0001C1.8501 6.39441 6.39441 1.8501 12.0001 1.8501C17.6058 1.8501 22.1501 6.39441 22.1501 12.0001C22.1501 17.6058 17.6058 22.1501 12.0001 22.1501C6.39441 22.1501 1.8501 17.6058 1.8501 12.0001ZM16.0639 10.672C16.52 10.3606 16.6373 9.73836 16.3258 9.28227C16.0144 8.82618 15.3922 8.70892 14.9361 9.02036L14.8348 9.08953C13.1939 10.21 11.7795 11.6244 10.6609 13.2575L9.20673 11.8049C8.816 11.4146 8.18283 11.4149 7.79252 11.8056C7.4022 12.1964 7.40254 12.8295 7.79327 13.2198L10.1345 15.5585C10.3549 15.7787 10.6653 15.8836 10.974 15.8422C11.2828 15.8008 11.5546 15.6179 11.7093 15.3475C12.7601 13.5099 14.2145 11.9349 15.9626 10.7412L16.0639 10.672Z" fill="#08AC3D" />
-        </svg>
-        ): (
-          <p>{task.expPoints} XP </p>
-        )
+          isCompleted ? (
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M1.8501 12.0001C1.8501 6.39441 6.39441 1.8501 12.0001 1.8501C17.6058 1.8501 22.1501 6.39441 22.1501 12.0001C22.1501 17.6058 17.6058 22.1501 12.0001 22.1501C6.39441 22.1501 1.8501 17.6058 1.8501 12.0001ZM16.0639 10.672C16.52 10.3606 16.6373 9.73836 16.3258 9.28227C16.0144 8.82618 15.3922 8.70892 14.9361 9.02036L14.8348 9.08953C13.1939 10.21 11.7795 11.6244 10.6609 13.2575L9.20673 11.8049C8.816 11.4146 8.18283 11.4149 7.79252 11.8056C7.4022 12.1964 7.40254 12.8295 7.79327 13.2198L10.1345 15.5585C10.3549 15.7787 10.6653 15.8836 10.974 15.8422C11.2828 15.8008 11.5546 15.6179 11.7093 15.3475C12.7601 13.5099 14.2145 11.9349 15.9626 10.7412L16.0639 10.672Z" fill="#08AC3D" />
+            </svg>
+          ) : (
+            <p>{task.expPoints} XP </p>
+          )
         }
 
 
