@@ -65,24 +65,24 @@ const Dashboard = () => {
   }
 
   const isTaskCompleted = (taskId: string) => {
-    return user?.tasks.filter((task: any) => task.taskId === taskId && task.completedAt !== null ).length > 0
+    return user?.tasks.filter((task: any) => task.taskId === taskId && task.completedAt !== null).length > 0
   }
-  
+
 
   if (!user) {
     <SplashScreen />
   }
 
   const rewardStatus = (reward: any) => {
-    
+
     if (user?.RewardsClaim?.filter((r: any) => r.rewardId === reward?.id).length > 0) {
       return 'Claimed'
     } else
-    if (user?.xp < reward?.expPoints) {
-      return 'progress'
-    } else if (user?.xp >= reward?.expPoints) {
-      return 'Claim'
-    }
+      if (user?.xp < reward?.expPoints) {
+        return 'progress'
+      } else if (user?.xp >= reward?.expPoints) {
+        return 'Claim'
+      }
   }
 
   const renderRewardButton = (reward: any) => {
@@ -123,7 +123,7 @@ const Dashboard = () => {
           Complete Tasks to <span className='text-white/25'>Re</span>Claim your Rewards
         </h1>
         <p className='text-xs text-white/60 mt-2'>
-        Prove your humanity by completing these tasks below
+          Prove your humanity by completing these tasks below
         </p>
         <div className="flex flex-col gap-4 mt-4 ">
           {
@@ -135,9 +135,9 @@ const Dashboard = () => {
 
 
         {
-          rewards.map((reward: any) => (
+          rewards.map((reward: any, i) => (
             <div className=" mt-6 border-2 shadow-md rounded-3xl grid grid-cols-3 ">
-              <div className=" col-span-2 p-3 flex flex-col justify-center items-start  ">
+              <div className={` col-span-2 p-3 flex flex-col justify-center items-start ${i === 0 ? "order-1" : "order-2"}  `}>
                 <p className=' text-lg font-semibold mb-4 ' >
                   {/* Complete tasks to <br />  claim the <u>Human Detector</u> NFT */}
                   {
@@ -149,7 +149,10 @@ const Dashboard = () => {
                 }
                 {/* <RewardModal /> */}
               </div>
-              <img src="/human.svg" alt="" />
+              {
+
+              }
+              <img src={`${i===0 ? '/human.svg': "/reclaim.svg"}`} className={`${i === 0 ? "order-2" : "order-1"}`} alt="" />
             </div>
           ))
         }
