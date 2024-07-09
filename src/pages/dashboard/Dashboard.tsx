@@ -123,7 +123,7 @@ const Dashboard = () => {
           Complete Tasks to <span className='text-white/25'>Re</span>Claim your Rewards
         </h1>
         <p className='text-xs text-white/60 mt-2'>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.
+        Prove your humanity by completing these tasks below
         </p>
         <div className="flex flex-col gap-4 mt-4 ">
           {

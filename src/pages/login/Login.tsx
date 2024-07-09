@@ -6,7 +6,7 @@ import { useAccount, useSignMessage } from "wagmi"
 import axios from 'axios'
 
 const Login = () => {
-  const { data,error,variables , signMessageAsync} = useSignMessage()
+  const {signMessageAsync} = useSignMessage()
   const account = useAccount()
   // redirect using react router dom if account is present
   const navigate = useNavigate()
