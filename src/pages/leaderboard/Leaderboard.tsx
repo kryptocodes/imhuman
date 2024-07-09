@@ -72,7 +72,7 @@ const Leaderboard = () => {
                     <p className={` ${data?.walletAddress === account.address ? 'text-white' : 'text-black'} font-bold  `} >{data?.walletAddress?.substring(0, 4)}....{data?.walletAddress?.substring(data?.walletAddress.length - 4)}</p>
                   </div>
                 </div>
-                <p className="font-bold"  >{data?.xp}</p>
+                <p className="font-bold"  >{data?.xp} XP</p>
               </div>
             )
           }

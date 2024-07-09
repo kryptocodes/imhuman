@@ -20,7 +20,7 @@ const Toppers = ({ place, data }: ToppersProps) => {
                 </p>
             </div>
             <div className="bg-white rounded-b-xl w-full text-brand text-center py-2">
-                {data?.xp || 0}
+                {data?.xp || 0} XP
             </div>
         </div>
     )

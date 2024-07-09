@@ -137,7 +137,9 @@ const TaskModal: FC<TaskModalProps> = ({ task, isCompleted }) => {
     <>
       <div onClick={() => { handleTask() }} className='bg-white p-3 rounded-3xl flex justify-between items-center font-bold cursor-pointer text-brand'>
         <div className="flex gap-2 items-center">
-          <div className=" bg-brand rounded-xl h-[54px] w-[54px]  "></div>
+          <div className=" bg-brand rounded-xl h-[54px] w-[54px] overflow-hidden  ">
+            <img src={`https://api.dicebear.com/9.x/shapes/svg?seed=${task.description}`} alt="" />
+          </div>
           <p className=' text-[#333342] w-[15ch]  ' >{task?.description}</p>
         </div>
         {
