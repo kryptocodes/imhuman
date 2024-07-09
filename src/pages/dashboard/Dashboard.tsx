@@ -6,6 +6,7 @@ import { useUser } from '@/lib/UserContext'
 import SplashScreen from '@/components/SplashScreen'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import { toast } from 'sonner'
 
 const Dashboard = () => {
 
@@ -86,13 +87,29 @@ const Dashboard = () => {
       }
   }
 
+  useEffect(() => {
+    // Cleanup timeout to prevent memory leak
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, []);
+
+  let timeoutId: NodeJS.Timeout;
+
   const handleCopy = () => {
-    navigator.clipboard.writeText(user?.referralCode)
-    setCopyText('Copied')
-    setTimeout(() => {
-      setCopyText('Copy Code')
-    }, 2000);
-  }
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(user?.referralCode).then(() => {
+        setCopyText('Copied');
+        timeoutId = setTimeout(() => {
+          setCopyText('Copy Code');
+        }, 2000);
+      }).catch(() => {
+        toast.error('Could not copy text');
+      });
+    } else {
+      toast.error('Clipboard not supported');
+    }
+  };
 
   const renderRewardButton = (reward: any) => {
     switch (rewardStatus(reward)) {

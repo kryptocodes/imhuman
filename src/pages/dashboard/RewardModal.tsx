@@ -5,22 +5,23 @@ import { Loader2 } from "lucide-react"
 import axios from 'axios';
 
 interface RewardModalProps {
-    reward: any
+    reward: Reward
+}
+
+interface Reward {
+    id: string;
+    rewardType: string;
 }
 
 const RewardModal: FC<RewardModalProps> = (reward) => {
     const [openModal, setOpenModal] = useState(false)
-    const [buttonState, setButtonState] = useState<string>("idle");
+    const [buttonState, setButtonState] = useState<"idle" | "loading" | "success" | "error">("idle");
 
-    const buttonCopy: {
-        idle: string,
-        loading: JSX.Element,
-        success: string,
-        [key: string]: string | JSX.Element,
-    } = {
+    const buttonCopy = {
         idle: "Claim Your Reward",
         loading: <Loader2 className="h-6 w-6 animate-spin" />,
         success: "Reward Claimed",
+        error: "Failed to Claim"
     };
 
     const ref = useRef<HTMLDivElement>(null);
@@ -38,42 +39,35 @@ const RewardModal: FC<RewardModalProps> = (reward) => {
     }, []);
 
     useEffect(() => {
-        if (openModal) {
-            document.body.classList.add('overflow-hidden');
-        } else {
-            document.body.classList.remove('overflow-hidden');
-        }
-
+        document.body.classList.toggle('overflow-hidden', openModal);
         return () => {
             document.body.classList.remove('overflow-hidden');
         };
     }, [openModal]);
 
     const handleClaim = async () => {
-        if (buttonState === "success") return;
+        if (buttonState === "success" || buttonState === "loading") return;
 
         setButtonState("loading");
         const token = localStorage.getItem('token')
         if (!token) {
             console.log('No JWT token found in local storage.')
+            setButtonState("error");
             return
         }
         try {
-            const response = await axios.post('https://m8aanm1noe.execute-api.ap-southeast-1.amazonaws.com/api/reward/claim', {
+            await axios.post('https://m8aanm1noe.execute-api.ap-southeast-1.amazonaws.com/api/reward/claim', {
                 rewardId: reward.reward.id
             }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             })
-            console.log(response.data, 'response.data')
+            setButtonState("success");
         } catch (error) {
             console.error('Failed to fetch tasks:', error)
+            setButtonState("error");
         }
-
-        setTimeout(() => {
-            setButtonState("success");
-        }, 1750);
 
         setTimeout(() => {
             setButtonState("idle");
@@ -81,7 +75,6 @@ const RewardModal: FC<RewardModalProps> = (reward) => {
         setOpenModal(false);
     }
 
-    console.log(reward, 'reward');
 
 
     return (

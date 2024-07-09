@@ -128,7 +128,7 @@ const RefferalDashboard: FC<RefferalDashboardProps> = () => {
 
 <div className="bg-[#f4f4f4] p-2 flex-1 rounded-xl">
   <p className='text-brand text-sm font-semibold' >Total Verifications done by referrals:</p>
-  <p className=' text-[54px] font-bolg pt-6 text-center ' >{user.referrals.length}</p>
+  <p className=' text-[54px] font-bolg pt-6 text-center ' >{user?.referrals?.length}</p>
 </div>
 </div>
 

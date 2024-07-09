@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { FC, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 interface ReferralCodeProps {
 
@@ -30,7 +31,7 @@ const ReferralCode: FC<ReferralCodeProps> = () => {
             console.log(response.data, 'response.data')
             navigate('/')
           } catch (error) {
-            console.error('Failed to fetch tasks:', error)
+            toast.error('Invalid Referral Code')
           }
         
     }
