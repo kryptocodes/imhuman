@@ -1,6 +1,8 @@
 import { useUser } from '@/lib/UserContext';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { useAccount } from 'wagmi';
 
 interface DashboardLayoutProps {
     children: React.ReactNode
@@ -9,6 +11,18 @@ interface DashboardLayoutProps {
 const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
 
     const user:any = useUser()
+
+    const account = useAccount()
+    const navigate = useNavigate()
+    const token = localStorage.getItem('token')
+    console.log(token, 'token');
+    
+    useEffect(() => {
+        if (!account.isConnected || !token) {
+            navigate('/login')
+        }
+    }
+        , [account.status])
 
     // return (
     //     <SplashScreen/>

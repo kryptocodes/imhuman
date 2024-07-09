@@ -23,11 +23,6 @@ const Dashboard = () => {
     fetchRewards()
   }, [])
 
-  console.log(user, 'user');
-
-  console.log(tasks, 'tasks')
-  console.log(rewards, 'rewards');
-
 
   const fetchTasks = async () => {
     const token = localStorage.getItem('token')
@@ -72,16 +67,17 @@ const Dashboard = () => {
   const isTaskCompleted = (taskId: string) => {
     return user?.tasks.filter((task: any) => task.taskId === taskId && task.completedAt !== null ).length > 0
   }
-
+  
 
   if (!user) {
     <SplashScreen />
   }
 
   const rewardStatus = (reward: any) => {
-    if (user?.rewardsClaim?.includes(reward.id)) {
+    
+    if (user?.RewardsClaim?.filter((r: any) => r.rewardId === reward?.id).length > 0) {
       return 'Claimed'
-    }
+    } else
     if (user?.xp < reward?.expPoints) {
       return 'progress'
     } else if (user?.xp >= reward?.expPoints) {
@@ -92,7 +88,7 @@ const Dashboard = () => {
   const renderRewardButton = (reward: any) => {
     switch (rewardStatus(reward)) {
       case 'Claimed':
-        return <button className='text-xs text-white bg-green-500 rounded-xl px-3 py-1' >Claimed</button>
+        return <button className='text-lg text-brand font-bold bg-white/80 rounded-full px-3 py-1' >Claimed</button>
       case 'progress':
         return <span className=" text-lg py-1 px-3 font-bold text-brand bg-white rounded-full ">
           {user?.xp} / {reward.expPoints} xp
@@ -158,7 +154,7 @@ const Dashboard = () => {
           ))
         }
 
-        <div className=" mt-6 border-2 shadow-md rounded-3xl grid grid-cols-3 ">
+        {/* <div className=" mt-6 border-2 shadow-md rounded-3xl grid grid-cols-3 ">
           <div className=" col-span-2 p-3 flex flex-col justify-center  ">
             <p className=' text-lg font-semibold mb-4 ' >
               Complete tasks to <br />  claim the <u>Human Detector</u> NFT
@@ -166,21 +162,8 @@ const Dashboard = () => {
             <RewardModal reward={null} />
           </div>
           <img src="/human.svg" alt="" />
-        </div>
-        <div className=" mt-6 border-2 shadow-md rounded-3xl grid grid-cols-3 ">
-          <img src="/human.svg" alt="" />
-          <div className=" col-span-2 p-3 flex flex-col items-start justify-center  ">
-            <p className=' text-xl  font-semibold mb-4 ' >
-              Collect 100xp to <br />  Get Airdrop
-            </p>
-            {/* claim modal */}
-            {/* <RewardModal /> */}
-            {/* Progress */}
-            <span className=" text-lg py-1 px-3 font-bold text-brand bg-white rounded-full ">
-              75 / 100 xp
-            </span>
-          </div>
-        </div>
+        </div> */}
+
       </div>
     </DashboardLayout>
   )

@@ -1,6 +1,7 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useAccount } from 'wagmi';
 
 interface LeaderboardsLayoutProps {
     children: React.ReactNode
@@ -11,8 +12,16 @@ const LeaderboardsLayout: FC<LeaderboardsLayoutProps> = ({ children }) => {
     const navigate = useNavigate()
     const location = useLocation()
 
-    console.log(location.pathname);
     
+    const account = useAccount()
+    const token = localStorage.getItem('token')
+    
+    useEffect(() => {
+        if (!account.isConnected || !token) {
+            navigate('/login')
+        }
+    }
+        , [account.status])
 
     // return (
     //     <SplashScreen/>

@@ -4,7 +4,6 @@ import { useOnClickOutside } from "usehooks-ts";
 import { Loader2 } from "lucide-react"
 import { toast } from 'sonner';
 import axios from 'axios';
-import { useUser } from '@/lib/UserContext';
 
 interface TaskModalProps {
   task:any
@@ -16,8 +15,7 @@ const TaskModal: FC<TaskModalProps> = ({task,isCompleted}) => {
   const [buttonState, setButtonState] = useState<string>("idle");
 
   console.log(isCompleted, 'isCompleted');
-  
-  const user:any = useUser()
+
   const handleTask = async () =>{
 
     if(isCompleted){
@@ -33,8 +31,6 @@ const TaskModal: FC<TaskModalProps> = ({task,isCompleted}) => {
 
     const req:any = await UpdateReclaimTask()
     window.open(req.requestUrl,'_blank')
-
-    console.log(req, 'requestUrl');
     
 
   }
@@ -61,10 +57,9 @@ const TaskModal: FC<TaskModalProps> = ({task,isCompleted}) => {
 
     try {
       const response = await axios.request(config);
-      console.log(response.data, 'response.data');
       return response.data;
     } catch (error) {
-      console.error('Failed to fetch rewards:', error);
+      toast.error('Failed to fetch rewards')
     }
   }
 

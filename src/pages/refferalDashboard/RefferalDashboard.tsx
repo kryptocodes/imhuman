@@ -63,16 +63,16 @@ const RefferalDashboard: FC<RefferalDashboardProps> = () => {
         </div>
         <div className=" bg-[#f4f4f4] rounded-3xl mt-6 ">
           {
-            Array.from({ length: 5 }).map((_, i) => (
+            referralData.map((data:any, i) => (
               <>
                 <div className=" py-4 px-3 flex justify-between items-center ">
                   <p className=' font-semibold' >
-                    0xa...EfG
+                    {data?.walletAddress.substring(0, 3)}...{data?.walletAddress.substring(data?.walletAddress.length - 3)}
                   </p>
-                  <p>23</p>
+                  <p>{data.referrals.length}</p>
                 </div>
                 {
-                  i !== 4 && <hr className=' border-black/10' />
+                  i !== referralData.length - 1 && <hr className=' border-black/10' />
                 }
               </>
             ))
