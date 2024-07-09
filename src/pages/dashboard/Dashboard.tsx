@@ -15,6 +15,7 @@ const Dashboard = () => {
 
   const [tasks, setTasks] = useState([])
   const [rewards, setRewards] = useState([])
+  const [copyText, setCopyText] = useState('Copy Code')
 
   useEffect(() => {
     // fetch tasks
@@ -85,6 +86,14 @@ const Dashboard = () => {
       }
   }
 
+  const handleCopy = () => {
+    navigator.clipboard.writeText(user?.referralCode)
+    setCopyText('Copied')
+    setTimeout(() => {
+      setCopyText('Copy Code')
+    }, 2000);
+  }
+
   const renderRewardButton = (reward: any) => {
     switch (rewardStatus(reward)) {
       case 'Claimed':
@@ -101,13 +110,15 @@ const Dashboard = () => {
     }
   }
 
+  if(!user || !tasks || !rewards) return <SplashScreen />
+
   return (
     <DashboardLayout>
       <div className=" bg-white/15 border border-white rounded-xl p-3  ">
         <p className=' text-sm' >Your Referral Code</p>
         <div className="flex justify-between items-center mt-2 ">
           <p className=' text-2xl font-bold ' > {user?.referralCode} </p>
-          <button className=' text-xs' > Copy Code </button>
+          <button className=' text-xs' onClick={handleCopy} > {copyText} </button>
         </div>
         <div className="flex gap-2 justify-center items-center mt-3">
           <button onClick={() => navigate('/referral-dashboard')} className='flex-1 bg-white hover:bg-white/80 transition-all duration-200 text-brand rounded-xl py-2 font-semibold text-xs'>
