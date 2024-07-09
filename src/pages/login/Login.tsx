@@ -41,7 +41,7 @@ const Login = () => {
   };
 
   const handleConnect = async ( walletAddress:string ) =>{
-    const nonceData:{nonce:string,id:any} = await generateNonce(walletAddress);
+    const nonceData:{nonce:string,id:string} = await generateNonce(walletAddress);
 
     const message = await signMessageAsync({message:nonceData.nonce});
 
@@ -66,7 +66,7 @@ const Login = () => {
     
   }
 
-  const verifyData = async (id:any,signature:any) => {
+  const verifyData = async (id:string,signature:string) => {
     try {
       const response = await axios.post('https://m8aanm1noe.execute-api.ap-southeast-1.amazonaws.com/api/auth/verify', {
         id,
