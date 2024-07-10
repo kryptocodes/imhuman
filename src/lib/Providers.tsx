@@ -16,7 +16,9 @@ const Providers = ({children}:ProvidersProps) => {
         <BrowserRouter>
             <WagmiProvider config={wagmiConfig}>
                 <QueryClientProvider client={queryClient}>
-                    <RainbowKitProvider theme={darkTheme({
+                    <RainbowKitProvider 
+                    modalSize='compact'
+                    theme={darkTheme({
                         accentColor: '#001AFF',
                         accentColorForeground: '#FFFF',
                     })} >
