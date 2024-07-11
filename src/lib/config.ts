@@ -40,7 +40,6 @@
 
 
 import '@rainbow-me/rainbowkit/styles.css';
-import { getComethConnectWallet } from "@cometh/connect-sdk-viem";
 import {
 connectorsForWallets,
 } from '@rainbow-me/rainbowkit'; 
@@ -48,17 +47,20 @@ import {
   createConfig,
   http,
 } from 'wagmi';
-import { polygonAmoy } from "viem/chains";
+import { mainnet } from "viem/chains";
+
+import {
+  walletConnectWallet,
+  metaMaskWallet
+} from '@rainbow-me/rainbowkit/wallets';
 
 const projectId = import.meta.env.VITE_WALLETCONNECT_PROJECT_ID;
-const API_KEY = import.meta.env.VITE_COMETH_API_KEY;
 
-const comethConnect = getComethConnectWallet({ apiKey: API_KEY });
 const connectors = connectorsForWallets(
   [
     {
       groupName: "Recommended",
-      wallets: [comethConnect],
+      wallets: [walletConnectWallet,metaMaskWallet],
     },
   ],
   {
@@ -69,8 +71,8 @@ const connectors = connectorsForWallets(
 
 export const wagmiConfig = createConfig({
   connectors,
-  chains: [polygonAmoy],
+  chains: [mainnet],
   transports: {
-    [polygonAmoy.id]: http(),
+    [mainnet.id]: http(),
   },
 });

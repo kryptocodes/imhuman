@@ -2,17 +2,19 @@ import { ConnectButton } from "@rainbow-me/rainbowkit"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
-import { useAccount, useSignMessage } from "wagmi"
+import { useAccount, useSignMessage, useDisconnect } from "wagmi"
 import axios from 'axios'
 
 const Login = () => {
-  const {signMessageAsync} = useSignMessage()
+  const { signMessageAsync } = useSignMessage()
   const account = useAccount()
   // redirect using react router dom if account is present
   const navigate = useNavigate()
 
   console.log(account.isConnected);
-  
+
+  const { disconnect } = useDisconnect()
+
 
   useEffect(() => {
     if (account.isConnected) {
@@ -20,10 +22,10 @@ const Login = () => {
       // navigate('/')
     }
   }
-  , [account.status])
+    , [account.status])
 
 
-  const generateNonce = async (walletAddress:string) => {
+  const generateNonce = async (walletAddress: string) => {
     try {
       const response = await axios.post('https://m8aanm1noe.execute-api.ap-southeast-1.amazonaws.com/api/auth/generate-nonce', {
         walletAddress: walletAddress
@@ -39,36 +41,43 @@ const Login = () => {
     }
   };
 
-  const handleConnect = async ( walletAddress:string ) =>{
-    if(!walletAddress){
+  const handleConnect = async (walletAddress: string) => {
+    if (!walletAddress) {
       toast('Connecting')
     }
-    const nonceData:{nonce:string,id:string} = await generateNonce(walletAddress);
+    const nonceData: { nonce: string, id: string } = await generateNonce(walletAddress);
 
-    const message = await signMessageAsync({message:nonceData.nonce});
+    try {
+      const message = await signMessageAsync({ message: nonceData.nonce });
+      const verify = await verifyData(nonceData.id, message)
 
-    const verify = await verifyData(nonceData.id,message)
+      alert(walletAddress)
+      if (!localStorage.getItem('token')) {
+        localStorage.setItem('token', verify.token)
+      } else {
+        localStorage.removeItem('token')
+        localStorage.setItem('token', verify.token)
+      }
 
-    
-    if(!localStorage.getItem('token')){
-      localStorage.setItem('token',verify.token)
-    } else {
-      localStorage.removeItem('token')
-      localStorage.setItem('token',verify.token)
+      if (verify.isFirstTime) {
+        navigate('/referral-code')
+      } else {
+        navigate('/')
+      }
+    } catch (error) {
+      alert(error)
+      disconnect()
     }
 
-    if(verify.isFirstTime){
-      navigate('/referral-code')
-    } else {
-      navigate('/')
-    }
 
-    
+
+
+
     // console.log(signature, 'signature');
-    
+
   }
 
-  const verifyData = async (id:string,signature:string) => {
+  const verifyData = async (id: string, signature: string) => {
     try {
       const response = await axios.post('https://m8aanm1noe.execute-api.ap-southeast-1.amazonaws.com/api/auth/verify', {
         id,
@@ -92,17 +101,17 @@ const Login = () => {
         <p className=' font-eiko text-6xl  textBorder leading-[57px] -translate-y-3  z-[1000] '>Embrace <br /> Humanity</p>
       </div>
       <div
-    
-      className="bg-white rounded-2xl px-[2px] mt-11 pt-[2px] pb-[6px] ">
-        {account?.isConnected ? 
-        <button 
-          onClick={() => handleConnect(account?.address as string)}
-        className=" text-brand border-2 font-bold py-2 px-9 rounded-2xl border-brand" >
-          Verify
-        </button> :
-        <ConnectButton /> 
-      }
-      
+
+        className="bg-white rounded-2xl px-[2px] mt-11 pt-[2px] pb-[6px] ">
+        {account?.isConnected ?
+          <button
+            onClick={() => handleConnect(account?.address as string)}
+            className=" text-brand border-2 font-bold py-2 px-9 rounded-2xl border-brand" >
+            Verify
+          </button> :
+          <ConnectButton />
+        }
+
       </div>
       <div className="relative w-full flex mt-16  justify-center items-center ">
         <img loading="eager" src="/human.svg" className=" w-[250px] " alt="" />
