@@ -1,6 +1,7 @@
 // UserContext.tsx
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import { toast } from 'sonner';
 
 const UserContext = createContext(null);
 
@@ -22,10 +23,9 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
           }
         });
         setUser(response.data);
-        console.log(response.data, 'response.data');
         
       } catch (error) {
-        console.error('Failed to fetch user:', error);
+        toast('Failed to fetch user');
       }
     };
 

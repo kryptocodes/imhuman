@@ -14,8 +14,6 @@ const TaskModal: FC<TaskModalProps> = ({ task, isCompleted }) => {
   const [openModal, setOpenModal] = useState(false)
   const [buttonState, setButtonState] = useState<string>("idle");
 
-  console.log(isCompleted, 'isCompleted');
-
   const handleTask = async () => {
 
     if (isCompleted) {
@@ -84,10 +82,9 @@ const TaskModal: FC<TaskModalProps> = ({ task, isCompleted }) => {
     };
 
     try {
-      const response = await axios.request(config);
-      console.log(response.data, 'response.data');
+      await axios.request(config);
     } catch (error) {
-      console.error('Failed to fetch rewards:', error);
+      toast.error('Failed to fetch rewards')
     }
 
   }

@@ -1,6 +1,7 @@
 // TaskContext.tsx
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import { toast } from 'sonner';
 
 const TaskContext = createContext(null);
 
@@ -22,9 +23,8 @@ export const TaskProvider = ({ children }: { children: React.ReactNode }) => {
           }
         });
         setTasks(response.data);
-        console.log(response.data, 'response.data');
       } catch (error) {
-        console.error('Failed to fetch tasks:', error);
+        toast('Failed to fetch tasks');
       }
     };
 

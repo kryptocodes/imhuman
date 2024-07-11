@@ -65,7 +65,6 @@ const RewardModal: FC<RewardModalProps> = (reward) => {
             })
             setButtonState("success");
         } catch (error) {
-            console.error('Failed to fetch tasks:', error)
             setButtonState("error");
         }
 

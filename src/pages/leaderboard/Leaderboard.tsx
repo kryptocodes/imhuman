@@ -23,10 +23,8 @@ const Leaderboard = () => {
     try {
       const response = await axios.get('https://m8aanm1noe.execute-api.ap-southeast-1.amazonaws.com/api/user/leaderboard')
       setLeaderboardData(response.data)
-      console.log(response.data, 'response.data')
       setIsLoading(false)
     } catch (error) {
-      console.error('Failed to fetch leaderboard data:', error)
       setIsLoading(false)
     }
 

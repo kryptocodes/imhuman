@@ -21,14 +21,13 @@ const ReferralCode: FC<ReferralCodeProps> = () => {
           return
         }
         try {
-            const response = await axios.post('https://m8aanm1noe.execute-api.ap-southeast-1.amazonaws.com/api/user/update/referral',{
+            await axios.post('https://m8aanm1noe.execute-api.ap-southeast-1.amazonaws.com/api/user/update/referral',{
                 referralCode: referral
             }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             })
-            console.log(response.data, 'response.data')
             navigate('/')
           } catch (error) {
             toast.error('Invalid Referral Code')

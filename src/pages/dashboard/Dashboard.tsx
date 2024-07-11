@@ -40,9 +40,8 @@ const Dashboard = () => {
         }
       })
       setTasks(response.data)
-      console.log(response.data, 'response.data')
     } catch (error) {
-      console.error('Failed to fetch tasks:', error)
+      toast('Failed to fetch tasks')
     }
   }
 
@@ -60,9 +59,7 @@ const Dashboard = () => {
         }
       })
       setRewards(response.data)
-      console.log(response.data, 'response.data')
     } catch (error) {
-      console.error('Failed to fetch rewards:', error)
     }
   }
 

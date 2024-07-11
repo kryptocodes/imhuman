@@ -5,9 +5,6 @@ interface ToppersProps {
 }
 
 const Toppers = ({ place, data }: ToppersProps) => {
-    console.log(place);
-    console.log(data, 'top');
-
 
     return (
         <div className={` ${place == 3 ? ' translate-y-8 ' : ' translate-y-0 '}  rounded-2xl border-2 `}>

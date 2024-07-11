@@ -1,6 +1,7 @@
 // RewardsContext.tsx
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import { toast } from 'sonner';
 
 const RewardsContext = createContext(null);
 
@@ -22,9 +23,8 @@ export const RewardsProvider = ({ children }: { children: React.ReactNode }) => 
           }
         });
         setRewards(response.data);
-        console.log(response.data, 'response.data');
       } catch (error) {
-        console.error('Failed to fetch rewards:', error);
+        toast('Failed to fetch rewards');
       }
     };
 

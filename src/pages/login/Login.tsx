@@ -11,7 +11,6 @@ const Login = () => {
   // redirect using react router dom if account is present
   const navigate = useNavigate()
 
-  console.log(account.isConnected);
 
   const { disconnect } = useDisconnect()
 
@@ -34,10 +33,9 @@ const Login = () => {
           'Content-Type': 'application/json'
         }
       });
-      console.log(response.data);
       return response.data;
     } catch (error) {
-      console.error(error);
+      toast('Error Generating Nonce')
     }
   };
 
@@ -51,7 +49,6 @@ const Login = () => {
       const message = await signMessageAsync({ message: nonceData.nonce });
       const verify = await verifyData(nonceData.id, message)
 
-      alert(walletAddress)
       if (!localStorage.getItem('token')) {
         localStorage.setItem('token', verify.token)
       } else {
@@ -65,15 +62,10 @@ const Login = () => {
         navigate('/')
       }
     } catch (error) {
-      alert(error)
+      toast('Error Signing Message')
       disconnect()
     }
 
-
-
-
-
-    // console.log(signature, 'signature');
 
   }
 
@@ -87,10 +79,9 @@ const Login = () => {
           'Content-Type': 'application/json'
         }
       });
-      console.log(response.data);
       return response.data;
     } catch (error) {
-      console.error(error);
+      toast('Error Verifying Data')
     }
   }
 

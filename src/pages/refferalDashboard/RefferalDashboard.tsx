@@ -42,15 +42,11 @@ const RefferalDashboard: FC<RefferalDashboardProps> = () => {
         }
       })
       setReferralData(response.data)
-      console.log(response.data, 'response.data')
     } catch (error) {
       console.error('Failed to fetch leaderboard data:', error)
     }
 
   }
-
-
-  console.log(referralData, 'referralData');
 
 
   return (
