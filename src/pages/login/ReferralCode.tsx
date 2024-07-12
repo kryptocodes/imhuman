@@ -20,6 +20,10 @@ const ReferralCode: FC<ReferralCodeProps> = () => {
           console.log('No JWT token found in local storage.')
           return
         }
+        if(referral.length < 6) {
+            toast.error('Please enter a valid Referral Code')
+            return
+        }
         try {
             await axios.post('https://m8aanm1noe.execute-api.ap-southeast-1.amazonaws.com/api/user/update/referral',{
                 referralCode: referral
@@ -30,7 +34,7 @@ const ReferralCode: FC<ReferralCodeProps> = () => {
             })
             navigate('/')
           } catch (error) {
-            toast.error('Invalid Referral Code')
+            toast.error('Invalid Referral Code or Referral Code already used')
           }
         
     }
