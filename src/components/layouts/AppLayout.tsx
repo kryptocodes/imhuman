@@ -2,7 +2,6 @@ import { FC, useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useAccount } from 'wagmi';
 import { Toaster } from 'sonner';
-import SplashScreen from '../SplashScreen';
 import ComingSoon from '@/pages/ComingSoon';
 interface AppLayoutProps {
 }
