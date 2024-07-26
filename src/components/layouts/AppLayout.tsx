@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 import { Toaster } from "sonner";
 import ComingSoon from "@/pages/ComingSoon";
