@@ -1,31 +1,35 @@
 // UserContext.tsx
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import axios from 'axios';
-import { toast } from 'sonner';
+import React, { createContext, useContext, useEffect, useState } from "react";
+import axios from "axios";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 const UserContext = createContext(null);
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchUser = async () => {
-      const token = localStorage.getItem('token'); // Assuming the token is stored with this key
+      const token = localStorage.getItem("token"); // Assuming the token is stored with this key
       if (!token) {
-        console.log('No JWT token found in local storage.');
-        return; // Exit if no token is found
+        console.log("No JWT token found in local storage.");
+
+        return navigate("/login"); // Exit if no token is found
       }
 
       try {
-        const response = await axios.get('https://m8aanm1noe.execute-api.ap-southeast-1.amazonaws.com/api/user', {
-          headers: {
-            'Authorization': `Bearer ${token}` // Assuming the API expects a Bearer token
+        const response = await axios.get(
+          "https://m8aanm1noe.execute-api.ap-southeast-1.amazonaws.com/api/user",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // Assuming the API expects a Bearer token
+            },
           }
-        });
+        );
         setUser(response.data);
-        
       } catch (error) {
-        toast('Failed to fetch user');
+        toast("Failed to fetch user");
       }
     };
 
@@ -35,11 +39,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     return () => clearInterval(intervalId); // Cleanup on unmount
   }, []);
 
-  return (
-    <UserContext.Provider value={user}>
-      {children}
-    </UserContext.Provider>
-  );
+  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
 };
 
 export const useUser = () => useContext(UserContext);

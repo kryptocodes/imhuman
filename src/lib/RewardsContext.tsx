@@ -1,30 +1,37 @@
 // RewardsContext.tsx
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import axios from 'axios';
-import { toast } from 'sonner';
+import React, { createContext, useContext, useEffect, useState } from "react";
+import axios from "axios";
+import { toast } from "sonner";
 
 const RewardsContext = createContext(null);
 
-export const RewardsProvider = ({ children }: { children: React.ReactNode }) => {
+export const RewardsProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const [rewards, setRewards] = useState(null);
 
   useEffect(() => {
     const fetchRewards = async () => {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       if (!token) {
-        console.log('No JWT token found in local storage.');
+        console.log("No JWT token found in local storage.");
         return;
       }
 
       try {
-        const response = await axios.get('https://m8aanm1noe.execute-api.ap-southeast-1.amazonaws.com/api/reward', {
-          headers: {
-            'Authorization': `Bearer ${token}`
+        const response = await axios.get(
+          "https://m8aanm1noe.execute-api.ap-southeast-1.amazonaws.com/api/reward",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
-        });
+        );
         setRewards(response.data);
       } catch (error) {
-        toast('Failed to fetch rewards');
+        toast("Failed to fetch rewards");
       }
     };
 

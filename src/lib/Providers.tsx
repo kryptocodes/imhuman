@@ -1,33 +1,20 @@
-import React from 'react'
-import { RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { WagmiProvider } from 'wagmi';
-import { BrowserRouter } from 'react-router-dom';
-import { wagmiConfig} from './config';
+import React from "react";
+// import { RainbowKitProvider, darkTheme } from "@rainbow-me/rainbowkit";
+// import { WagmiProvider } from "wagmi";
+import { BrowserRouter } from "react-router-dom";
+// import { wagmiConfig } from "./config";
+import { SolanaWalletProvider } from "../components/WalletContext";
 
 interface ProvidersProps {
-    children: React.ReactNode
+  children: React.ReactNode;
 }
 
-const Providers = ({children}:ProvidersProps) => {
-    const queryClient = new QueryClient();
+const Providers = ({ children }: ProvidersProps) => {
+  return (
+    <SolanaWalletProvider>
+      <BrowserRouter>{children}</BrowserRouter>
+    </SolanaWalletProvider>
+  );
+};
 
-    return (
-        <BrowserRouter>
-            <WagmiProvider config={wagmiConfig}>
-                <QueryClientProvider client={queryClient}>
-                    <RainbowKitProvider 
-                    modalSize='compact'
-                    theme={darkTheme({
-                        accentColor: '#001AFF',
-                        accentColorForeground: '#FFFF',
-                    })} >
-                            {children}
-                    </RainbowKitProvider>
-                </QueryClientProvider>
-            </WagmiProvider>
-        </BrowserRouter>
-    )
-}
-
-export default Providers
+export default Providers;

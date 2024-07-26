@@ -26,8 +26,6 @@
 
 // console.log(tempWallets, 'filteredWallets');
 
-
-
 // export default getDefaultConfig({
 //   appName: 'I am human',
 //   projectId: projectId as string,
@@ -38,34 +36,26 @@
 //   wallets: tempWallets
 // });
 
-
-import '@rainbow-me/rainbowkit/styles.css';
-import {
-connectorsForWallets,
-} from '@rainbow-me/rainbowkit'; 
-import {
-  createConfig,
-  http,
-} from 'wagmi';
+import "@rainbow-me/rainbowkit/styles.css";
+import { connectorsForWallets } from "@rainbow-me/rainbowkit";
+import { createConfig, http } from "wagmi";
 import { mainnet } from "viem/chains";
 
 import {
   walletConnectWallet,
-  metaMaskWallet
-} from '@rainbow-me/rainbowkit/wallets';
-
-const projectId = import.meta.env.VITE_WALLETCONNECT_PROJECT_ID;
+  metaMaskWallet,
+} from "@rainbow-me/rainbowkit/wallets";
 
 const connectors = connectorsForWallets(
   [
     {
       groupName: "Recommended",
-      wallets: [walletConnectWallet,metaMaskWallet],
+      wallets: [walletConnectWallet, metaMaskWallet],
     },
   ],
   {
-    appName: 'I am human',
-    projectId: projectId as string,
+    appName: "wen-lucky",
+    projectId: "59f2ae98312c7cc3fc246584b382ae5a" as string,
   }
 );
 
